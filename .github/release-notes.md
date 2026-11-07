@@ -6,4 +6,5 @@ Try to open it once, then go to **System Settings › Privacy & Security** and c
 (Or run `xattr -dr com.apple.quarantine "/Applications/Naga Remapper.app"` in Terminal.)
 Then allow **Input Monitoring** when asked, and quit and reopen the app.
 
-Unofficial and not affiliated with Razer. Click **Save…** to back up your mouse before changing anything.
+Unofficial and not affiliated with Razer. Provided "as is" under the MIT License, without warranty of any kind; use at your own risk.
+Click **Save…** to back up your mouse before changing anything.

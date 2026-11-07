@@ -3,10 +3,10 @@
 Remap the buttons on a **Razer Naga V3 Pro** from a Mac. Razer Synapse doesn't support this mouse on macOS.
 Changes are written to the mouse's own memory, so they keep working on any computer, without this app running.
 
-> **Unofficial.** Not affiliated with or endorsed by Razer. The protocol was reverse-engineered and tested on one
-> Naga V3 Pro (firmware 1.01). Use it at your own risk, and save a backup of your mouse first (step 4 below).
-
-I have only tested this on a new Razer Naga V3 Pro with firware version 1.0.1, using an Apple M4 Max on 26.6.2 (25G83)
+> **Unofficial and use at your own risk.** This project is not affiliated with, endorsed by, or supported by Razer.
+> It writes settings to your mouse's onboard memory using a protocol that was reverse-engineered, not documented,
+> and it has only been tested on one Naga V3 Pro (firmware 1.01). It is provided "as is", without warranty of any kind.
+> Save a backup of your mouse before changing anything (see [Disclaimer](#disclaimer)).
 
 ## What you can do
 - Remap the 12-, 6- and 2-button side panels, right click, wheel click, wheel tilt, the DPI buttons,
@@ -71,3 +71,21 @@ especially USB captures from Razer Synapse on Windows.
 On GitHub, go to **Releases › Draft a new release**, create a tag such as `v0.1.0`, and click **Publish release**.
 GitHub Actions then builds a universal app (about 5 minutes) and attaches the zip to that release,
 along with install instructions. To test a build without releasing, use **Actions › Release › Run workflow**.
+
+## Disclaimer
+This software is provided "as is", without warranty of any kind, express or implied, including but not limited to
+the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the
+authors or copyright holders be liable for any claim, damages or other liability arising from, out of or in
+connection with the software or its use. See [LICENSE](LICENSE) for the full terms.
+
+In particular:
+- Using this app may affect your mouse's configuration or behavior, and may affect your warranty or support from Razer.
+  You use it entirely at your own risk.
+- The protocol was worked out by experiment and may be wrong for other firmware versions or hardware revisions.
+- Razer Synapse may overwrite settings made with this app, and this app may overwrite settings made with Synapse.
+
+Razer, Naga, Synapse, HyperSpeed and HyperScroll are trademarks of Razer Inc. They are used here only to identify
+the hardware this project works with. This project is independent and not affiliated with Razer Inc.
+
+## License
+[MIT](LICENSE) © 2026 Scott Harvey

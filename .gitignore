@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Build output
+app/.build/
+*.app
+/razerprobe
+tools/razerprobe
+
+# Personal backups and logs (may describe your own mouse setup)
+*.json
+!app/**/*.json
+mapping-backup.txt
+cmd_output.txt

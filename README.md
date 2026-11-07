@@ -1,0 +1,60 @@
+# Naga Remapper for macOS
+
+Remap the buttons on a **Razer Naga V3 Pro** from a Mac. Razer Synapse doesn't support this mouse on macOS.
+Changes are written to the mouse's own memory, so they keep working on any computer, without this app running.
+
+> **Unofficial.** Not affiliated with or endorsed by Razer. The protocol was reverse-engineered and tested on one
+> Naga V3 Pro (firmware 1.01). Use it at your own risk, and save a backup of your mouse first (step 4 below).
+
+I have only tested this on a new Razer Naga V3 Pro with firware version 1.0.1, using an Apple M4 Max on 26.6.2 (25G83)
+
+## What you can do
+- Remap the 12-, 6- and 2-button side panels, right click, wheel click, wheel tilt, the DPI buttons,
+  the scroll-mode button, top button 3 and the profile button. Left click is locked so you can't lose it.
+- Assign keyboard keys (with ⌃ ⌥ ⇧ ⌘), mouse functions, DPI up/down, scroll left/right, scroll-mode toggle or profile cycle.
+- Save the whole setup to a file and load it later, for example one file for games and one for work.
+- Reset everything to factory defaults.
+
+Not supported yet: macros, media keys, disabling a button, Hypershift, launching apps, the AI Prompt Master button,
+and switching between the mouse's onboard profiles.
+
+## Requirements
+- macOS 13 (Ventura) or later.
+- **Xcode Command Line Tools.** This is the only thing to install: it includes `git`, the Swift compiler and `codesign`.
+  The full Xcode app isn't needed. Install it from Terminal:
+  ```bash
+  xcode-select --install
+  ```
+  If it says the tools are already installed, you're set.
+- A Razer Naga V3 Pro connected by **USB cable or the HyperSpeed wireless dongle**. Bluetooth won't work.
+
+## Install
+1. Download the code:
+   ```bash
+   git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+   cd YOUR-REPO/app
+   ```
+2. Build the app (takes a minute the first time):
+   ```bash
+   ./build-app.sh
+   ```
+   This creates **Naga Remapper.app** in the `app` folder. You can drag it into Applications.
+3. Open it. macOS asks to allow **Input Monitoring**. Allow it in
+   System Settings › Privacy & Security › Input Monitoring, then quit and reopen the app.
+   If you rebuild the app later, macOS may ask again.
+4. **Save a backup first:** click **Save…** before changing anything.
+
+## Using it
+- The app reads your mouse when it opens. Pick a new action for any button. Changed buttons get an orange dot.
+- Click **Apply to Mouse** to write the changes. Each one is read back to confirm it took.
+- **Open…** loads a saved file, **Factory Defaults** restores the original layout, and **Revert** drops unapplied changes.
+  These all still need **Apply to Mouse**.
+
+## Troubleshooting
+- **"Razer Naga V3 Pro not found"**: use the cable or dongle instead of Bluetooth, and close Razer Synapse if it's installed.
+- **"Couldn't open the mouse"**: Input Monitoring isn't allowed yet (see step 3). Quit and reopen the app after allowing it.
+
+## For developers
+`tools/razerprobe.swift` is the command-line tool used to work out the protocol, and `CLAUDE.md` holds the findings.
+See [docs/REVERSE-ENGINEERING.md](docs/REVERSE-ENGINEERING.md). Help with the unsupported features is welcome,
+especially USB captures from Razer Synapse on Windows.

@@ -18,9 +18,17 @@ Changes are written to the mouse's own memory, so they keep working on any compu
 Not supported yet: macros, media keys, disabling a button, Hypershift, launching apps, the AI Prompt Master button,
 and switching between the mouse's onboard profiles.
 
+## Connect by USB to configure
+The mouse must be connected **over USB** while you change settings: either the **USB cable** or the
+**HyperSpeed wireless USB dongle**. **Bluetooth is not supported** for configuring the mouse.
+
+Your button mappings are saved on the mouse itself, so once they're applied you can switch back to Bluetooth
+(or use the mouse on another computer) and they keep working.
+
 ## Download (easiest)
 Get the latest **NagaRemapper-….zip** from the [Releases page](https://github.com/YOUR-USERNAME/YOUR-REPO/releases),
 unzip it, and move **Naga Remapper.app** to Applications. It runs on Apple silicon and Intel Macs with macOS 13 or later.
+Connect the mouse by USB cable or the HyperSpeed dongle before opening it.
 
 The app isn't notarized by Apple, so macOS blocks it the first time. Try to open it once, then go to
 **System Settings › Privacy & Security** and click **Open Anyway**. Then follow steps 3 and 4 below.
@@ -34,7 +42,7 @@ The app isn't notarized by Apple, so macOS blocks it the first time. Try to open
   xcode-select --install
   ```
   If it says the tools are already installed, you're set.
-- A Razer Naga V3 Pro connected by **USB cable or the HyperSpeed wireless dongle**. Bluetooth won't work.
+- A Razer Naga V3 Pro connected **over USB**: the USB cable or the HyperSpeed wireless USB dongle. Bluetooth won't work.
 
 ### Install
 1. Download the code:
@@ -59,7 +67,8 @@ The app isn't notarized by Apple, so macOS blocks it the first time. Try to open
   These all still need **Apply to Mouse**.
 
 ## Troubleshooting
-- **"Razer Naga V3 Pro not found"**: use the cable or dongle instead of Bluetooth, and close Razer Synapse if it's installed.
+- **"Razer Naga V3 Pro not found"**: the mouse must be connected over USB (cable or HyperSpeed dongle), not Bluetooth.
+  Switch the mouse's connection mode, then click **Read from Mouse**. Close Razer Synapse if it's installed.
 - **"Couldn't open the mouse"**: Input Monitoring isn't allowed yet (see step 3). Quit and reopen the app after allowing it.
 
 ## For developers

@@ -107,3 +107,7 @@ Default side buttons send keys 1-9, 0, -, =, which lets us decode the reply form
 3. Assign a short macro.  4. Assign a media key (volume up).  5. Set a button to Disable.  6. Assign a Hypershift action.
 
 - CONFIRMED: modifier byte 0x08 = Command. Side button 12 set to modifier 08 + key 04 selects all, so the byte is the standard HID modifier bitmask (01 Ctrl, 02 Shift, 04 Option, 08 Cmd).
+
+## Bluetooth (CONFIRMED 2026-11-07)
+- In Bluetooth mode the mouse doesn't appear as a Razer HID device in `razerprobe list` (no VID 0x1532 control interface).
+  Configuring works only over USB (cable or HyperSpeed dongle). Mappings stored on the mouse still apply over Bluetooth.

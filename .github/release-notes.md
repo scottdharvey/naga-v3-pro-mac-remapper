@@ -1,5 +1,6 @@
 Download **NagaRemapper-….zip** below, unzip it, and move **Naga Remapper.app** to Applications.
 Works on Apple silicon and Intel Macs running macOS 13 or later.
+**Connect the mouse over USB** (cable or HyperSpeed dongle) to configure it. Bluetooth isn't supported for configuration, but saved mappings keep working over Bluetooth.
 
 **First launch:** this build isn't notarized by Apple, so macOS blocks it the first time.
 Try to open it once, then go to **System Settings › Privacy & Security** and click **Open Anyway**.

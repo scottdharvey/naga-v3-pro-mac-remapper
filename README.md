@@ -18,7 +18,15 @@ I have only tested this on a new Razer Naga V3 Pro with firware version 1.0.1, u
 Not supported yet: macros, media keys, disabling a button, Hypershift, launching apps, the AI Prompt Master button,
 and switching between the mouse's onboard profiles.
 
-## Requirements
+## Download (easiest)
+Get the latest **NagaRemapper-….zip** from the [Releases page](https://github.com/YOUR-USERNAME/YOUR-REPO/releases),
+unzip it, and move **Naga Remapper.app** to Applications. It runs on Apple silicon and Intel Macs with macOS 13 or later.
+
+The app isn't notarized by Apple, so macOS blocks it the first time. Try to open it once, then go to
+**System Settings › Privacy & Security** and click **Open Anyway**. Then follow steps 3 and 4 below.
+
+## Build it yourself
+### Requirements
 - macOS 13 (Ventura) or later.
 - **Xcode Command Line Tools.** This is the only thing to install: it includes `git`, the Swift compiler and `codesign`.
   The full Xcode app isn't needed. Install it from Terminal:
@@ -28,7 +36,7 @@ and switching between the mouse's onboard profiles.
   If it says the tools are already installed, you're set.
 - A Razer Naga V3 Pro connected by **USB cable or the HyperSpeed wireless dongle**. Bluetooth won't work.
 
-## Install
+### Install
 1. Download the code:
    ```bash
    git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
@@ -58,3 +66,8 @@ and switching between the mouse's onboard profiles.
 `tools/razerprobe.swift` is the command-line tool used to work out the protocol, and `CLAUDE.md` holds the findings.
 See [docs/REVERSE-ENGINEERING.md](docs/REVERSE-ENGINEERING.md). Help with the unsupported features is welcome,
 especially USB captures from Razer Synapse on Windows.
+
+## Making a release (maintainers)
+On GitHub, go to **Releases › Draft a new release**, create a tag such as `v0.1.0`, and click **Publish release**.
+GitHub Actions then builds a universal app (about 5 minutes) and attaches the zip to that release,
+along with install instructions. To test a build without releasing, use **Actions › Release › Run workflow**.

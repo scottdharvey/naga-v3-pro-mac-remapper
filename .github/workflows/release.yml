@@ -1,0 +1,52 @@
+name: Release
+
+# Publish a release on GitHub (Releases > Draft a new release, with a tag like v0.2.0).
+# This workflow then builds the app and attaches the zip to that release.
+# "Run workflow" on the Actions tab builds it without releasing (download it from the run's artifacts).
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    env:
+      TAG: ${{ github.event.release.tag_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build universal app
+        working-directory: app
+        run: |
+          if [[ -n "$TAG" ]]; then VERSION="${TAG#v}"; else VERSION="0.0.0-dev"; fi
+          VERSION="$VERSION" BUILD="$GITHUB_RUN_NUMBER" UNIVERSAL=1 ./build-app.sh
+
+      - name: Zip app
+        run: |
+          NAME="NagaRemapper-${TAG:-dev}.zip"
+          ditto -c -k --keepParent "app/Naga Remapper.app" "$NAME"
+          echo "ZIP=$NAME" >> "$GITHUB_ENV"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NagaRemapper
+          path: ${{ env.ZIP }}
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$TAG" "$ZIP" --clobber
+          # Add the install instructions under whatever notes you wrote.
+          gh release view "$TAG" --json body -q .body > notes.md
+          if ! grep -q "Open Anyway" notes.md; then
+            printf '\n\n---\n' >> notes.md
+            cat .github/release-notes.md >> notes.md
+            gh release edit "$TAG" --notes-file notes.md
+          fi

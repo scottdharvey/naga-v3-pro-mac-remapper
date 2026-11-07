@@ -1,9 +1,19 @@
 #!/bin/bash
 # Builds "Naga Remapper.app" next to this script.
+#   VERSION=1.2.0   version shown in Finder (default 0.1)
+#   BUILD=7         build number (default 1)
+#   UNIVERSAL=1     build for both Apple silicon and Intel (needs the full Xcode app; used by the release workflow)
 set -euo pipefail
 cd "$(dirname "$0")"
-swift build -c release --product NagaRemapper
-BIN="$(swift build -c release --show-bin-path)/NagaRemapper"
+
+VERSION="${VERSION:-0.1}"
+BUILD="${BUILD:-1}"
+ARCH_FLAGS=()
+if [[ "${UNIVERSAL:-0}" == "1" ]]; then ARCH_FLAGS=(--arch arm64 --arch x86_64); fi
+
+swift build -c release --product NagaRemapper ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"}
+BIN="$(swift build -c release ${ARCH_FLAGS[@]+"${ARCH_FLAGS[@]}"} --show-bin-path)/NagaRemapper"
+
 APP="Naga Remapper.app"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS"
@@ -18,12 +28,12 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleIdentifier</key><string>local.naga.remapper</string>
   <key>CFBundleExecutable</key><string>NagaRemapper</string>
   <key>CFBundlePackageType</key><string>APPL</string>
-  <key>CFBundleShortVersionString</key><string>0.1</string>
-  <key>CFBundleVersion</key><string>1</string>
+  <key>CFBundleShortVersionString</key><string>${VERSION}</string>
+  <key>CFBundleVersion</key><string>${BUILD}</string>
   <key>LSMinimumSystemVersion</key><string>13.0</string>
   <key>NSHighResolutionCapable</key><true/>
 </dict>
 </plist>
 PLIST
 codesign --force --sign - "$APP"
-echo "Built $(pwd)/$APP"
+echo "Built $(pwd)/$APP ($(lipo -archs "$APP/Contents/MacOS/NagaRemapper"))"

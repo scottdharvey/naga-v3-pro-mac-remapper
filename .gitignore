@@ -12,3 +12,4 @@ tools/razerprobe
 !app/**/*.json
 mapping-backup.txt
 cmd_output.txt
+/usbprobe

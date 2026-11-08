@@ -365,6 +365,7 @@ case "setkey":
         print("Current mapping [\(hexBytes(before))] isn't a plain key mapping. Nothing was written."); exit(1)
     }
     print("before: \(decode(before))   [\(hexBytes(before))]")
+    if before[5] == mod && before[6] == key { print("Already set; nothing written."); exit(0) }
     let stamp = ISO8601DateFormatter().string(from: Date())
     let line = "\(stamp) profile=\(String(format: "%02X", p)) button=\(String(format: "%02X", b)) before=[\(hexBytes(before))]\n"
     let url = URL(fileURLWithPath: "mapping-backup.txt")
@@ -471,6 +472,7 @@ case "set":
     guard let before = readMapHS(i.device, tid: tid, p: p, b: b, hs: hs) else { print("Couldn't read the current mapping; nothing written."); exit(1) }
     print("before: \(decodeFull(before))   [\(hexBytes(before))]")
     print("new:    \(decodeFull(w))   [\(hexBytes(w))]")
+    if before == w { print("Already set; nothing written."); exit(0) }
     guard yes else { print("Re-run with --yes to write."); exit(0) }
     appendBackupLog("set profile=\(String(format: "%02X", p)) button=\(String(format: "%02X", b)) hs=\(hs) before=[\(hexBytes(before))]")
     let res = writeMap(i.device, tid: tid, w)

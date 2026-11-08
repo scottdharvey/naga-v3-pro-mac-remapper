@@ -112,3 +112,24 @@ Default side buttons send keys 1-9, 0, -, =, which lets us decode the reply form
 - In Bluetooth mode the mouse doesn't appear as a Razer HID device in `razerprobe list` (no VID 0x1532 control interface).
   Configuring works only over USB (cable or HyperSpeed dongle). Mappings stored on the mouse still apply over Bluetooth.
 - Type 00 ("do nothing"): `set 01 4B raw 00` wrote [01 4B 00 00 01 00 00 00 00 00] and the read-back verified. CONFIRMED: it survives reconnecting. Shown in the app as "Unbound".
+
+## Notes from cepheiden/Razer-Naga-Trinity-MACOS (MIT, Naga Trinity PID 0x0067; their claims, not verified on the V3 Pro)
+- Same binding protocol: 02/0C write, 02/8C read, byte 8 = "slot" (= our profile byte), source ids 40-4B (12-btn), 50-56 (7-btn), 0B/0C DPI, 0E type 07.
+- From their Synapse 3 capture: each binding is written to slot 2, then slot 1. They say a slot-1-only write is silently dropped on the Trinity.
+  On the V3 Pro, slot-1-only writes verified and survived reconnecting, so this isn't needed here. Synapse may still use slot 2 for something.
+- Their capture puts byte 12 = 02 for key actions ("param length"). The V3 Pro reads back 01 there, and our writes with 01 work.
+- No profile switching or slot enabling. Profile slots are listed as "not yet" in their project too.
+- Useful other findings:
+  - They use libusb control transfers on endpoint 0 (SET_REPORT 0x21/0x09, wValue 0x0300, GET_REPORT 0xA1/0x01). macOS leaves EP0 open, so NO Input Monitoring permission is needed.
+  - DPI stages: 04/86 with arg 00 = runtime list, 01 = EEPROM list. Writing 04/06 with arg 01 updates both (persistent).
+  - Macros: bind a button to F13-F24 and catch the key on the host (they use Electron globalShortcut + osascript; a CGEventTap filtered by VID/PID is the native option).
+
+## DPI stages (CONFIRMED read, 2026-11-07, via `usbprobe dpistages` = class 04 cmd 86 size 0x26)
+- Reply: [list 00 runtime / 01 saved] [active stage] [stage count] then 7 bytes per stage: [stage n] [X hi lo] [Y hi lo] [3rd value hi lo].
+- Factory: 5 stages, 400 / 800 / 1600 / 3200 / 6400, active stage 03 (= 1600, matches DPI read 0x0640). The 3rd value equals X/Y in every stage (meaning unknown).
+- Runtime and saved lists are identical. Write side (04/06 with arg 01, per the Trinity notes) is untested.
+
+## Native USB tool (tools/usbprobe.c + app/Sources/CNagaUSB)
+- Uses EP0 control transfers through IOUSBHostDevice; all 4 interface indexes answer, index 0 is used.
+- Fixed 2026-11-07: putting idVendor in the IOServiceMatching dict matched nothing on macOS 26; enumerate all devices and filter by vendor in code.
+- CONFIRMED 2026-11-07: writes work over this path too. `usbprobe setkey 01 4A 04 --yes` changed side 11 from - (2D) to a (04), write status ok, read-back verified.

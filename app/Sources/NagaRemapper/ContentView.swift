@@ -232,7 +232,8 @@ enum ActionKind: String, CaseIterable, Identifiable {
     case scrollMode = "Scroll mode toggle"
     case profileCycle = "Profile cycle"
     case firmwareDefault = "Firmware default"
-    case raw = "Other (not decoded)"
+    case disabled = "Unbound (does nothing)"
+    case raw = "Unknown action"
     var id: String { rawValue }
 
     init(_ a: ButtonAction) {
@@ -246,6 +247,7 @@ enum ActionKind: String, CaseIterable, Identifiable {
         case .scrollModeToggle: self = .scrollMode
         case .profileCycle: self = .profileCycle
         case .firmwareDefault: self = .firmwareDefault
+        case .disabled: self = .disabled
         case .raw: self = .raw
         }
     }
@@ -261,6 +263,7 @@ enum ActionKind: String, CaseIterable, Identifiable {
         case .scrollMode: return .scrollModeToggle
         case .profileCycle: return .profileCycle
         case .firmwareDefault: return .firmwareDefault
+        case .disabled: return .disabled
         case .raw: return .raw([])
         }
     }

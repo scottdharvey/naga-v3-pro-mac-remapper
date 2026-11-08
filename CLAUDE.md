@@ -111,3 +111,4 @@ Default side buttons send keys 1-9, 0, -, =, which lets us decode the reply form
 ## Bluetooth (CONFIRMED 2026-11-07)
 - In Bluetooth mode the mouse doesn't appear as a Razer HID device in `razerprobe list` (no VID 0x1532 control interface).
   Configuring works only over USB (cable or HyperSpeed dongle). Mappings stored on the mouse still apply over Bluetooth.
+- Type 00 ("do nothing"): `set 01 4B raw 00` wrote [01 4B 00 00 01 00 00 00 00 00] and the read-back verified. CONFIRMED: it survives reconnecting. Shown in the app as "Unbound".

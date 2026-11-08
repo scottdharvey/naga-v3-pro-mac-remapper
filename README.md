@@ -15,11 +15,12 @@ Changes are written to the mouse's own memory, so they keep working on any compu
 ## What you can do
 - Remap the 12-, 6- and 2-button side panels, right click, wheel click, wheel tilt, the DPI buttons,
   the scroll-mode button, top button 3 and the profile button. Left click is locked so you can't lose it.
-- Assign keyboard keys (with ⌃ ⌥ ⇧ ⌘), mouse functions, DPI up/down, scroll left/right, scroll-mode toggle or profile cycle.
+- Assign keyboard keys (with ⌃ ⌥ ⇧ ⌘), mouse functions, DPI up/down, scroll left/right, scroll-mode toggle or profile cycle,
+  or leave a button **unbound** so it does nothing.
 - Save the whole setup to a file and load it later, for example one file for games and one for work.
 - Reset everything to factory defaults.
 
-Not supported yet: macros, media keys, disabling a button, Hypershift, launching apps, the AI Prompt Master button,
+Not supported yet: macros, media keys, Hypershift, launching apps, the AI Prompt Master button,
 and switching between the mouse's onboard profiles.
 
 ## Connect by USB to configure

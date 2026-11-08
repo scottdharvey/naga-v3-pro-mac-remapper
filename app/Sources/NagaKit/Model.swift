@@ -80,6 +80,7 @@ public enum ButtonAction: Equatable, Hashable {
     case scrollModeToggle
     case tiltLeft, tiltRight
     case firmwareDefault          // type 0C with the button's own id (what top button 3 has at factory)
+    case disabled                 // type 00: button does nothing
     case raw([UInt8])             // 7 bytes: type, 01, params
 
     /// Decodes the 10 bytes returned by 0x8C.
@@ -87,6 +88,7 @@ public enum ButtonAction: Equatable, Hashable {
         guard m.count == 10 else { self = .raw([]); return }
         let tail = Array(m[3..<10])
         switch (m[3], m[5]) {
+        case (0x00, _): self = .disabled
         case (0x01, let n): self = .mouse(n)
         case (0x02, _): self = .key(modifiers: m[5], key: m[6])
         case (0x06, 0x01): self = .dpiUp
@@ -113,6 +115,7 @@ public enum ButtonAction: Equatable, Hashable {
         case .tiltLeft: t = [0x0E, 0x01, 0x68, 0x00, 0x14]
         case .tiltRight: t = [0x0E, 0x01, 0x69, 0x00, 0x14]
         case .firmwareDefault: t = [0x0C, 0x01, button]
+        case .disabled: t = [0x00, 0x01]
         case .raw(let r): t = r
         }
         t = Array(t.prefix(7))
@@ -131,7 +134,8 @@ public enum ButtonAction: Equatable, Hashable {
         case .tiltLeft: return "Scroll left"
         case .tiltRight: return "Scroll right"
         case .firmwareDefault: return "Firmware default"
-        case .raw(let r): return "Raw " + r.map { String(format: "%02X", $0) }.joined(separator: " ")
+        case .disabled: return "Unbound"
+        case .raw(let r): return "Unknown action: " + r.map { String(format: "%02X", $0) }.joined(separator: " ")
         }
     }
 }

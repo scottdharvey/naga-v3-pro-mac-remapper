@@ -3,6 +3,10 @@
 Remap the buttons on a **Razer Naga V3 Pro** from a Mac. Razer Synapse doesn't support this mouse on macOS.
 Changes are written to the mouse's own memory, so they keep working on any computer, without this app running.
 
+<p align="center">
+  <img src="docs/naga-remapper.png" alt="Naga Remapper app window showing button mappings grouped by location" width="820">
+</p>
+
 > **Unofficial and use at your own risk.** This project is not affiliated with, endorsed by, or supported by Razer.
 > It writes settings to your mouse's onboard memory using a protocol that was reverse-engineered, not documented,
 > and it has only been tested on one Naga V3 Pro (firmware 1.01). It is provided "as is", without warranty of any kind.
